@@ -1,10 +1,10 @@
 package datamining
 
 type Event struct {
-	Name     string  `json:"eventName"`
-	URL      string  `json:"eventURL"`
-	Date     string  `json:"eventDate"`
-	Venue    string  `json:"eventVenue"`
-	Scene    *string `json:"eventScene,omitempty"`
-	ImageURL *string `json:"eventImageURL,omitempty"`
+	Name     string  `json:"Name"`
+	URL      string  `json:"URL"`
+	Date     string  `json:"Date"`
+	Venue    string  `json:"Venue"`
+	Scene    *string `json:"Scene,omitempty"`
+	ImageURL *string `json:"ImageURL,omitempty"`
 }

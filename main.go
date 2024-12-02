@@ -15,7 +15,7 @@ func main() {
 		panic(err)
 	}
 
-	body, err := parser.RequestURL("https://www.bileter.ru/afisha/building/bolshoy_kontsertnyiy_zal_oktyabrskiy.html")
+	body, err := parser.GetRequest("https://www.bileter.ru/afisha/building/bolshoy_kontsertnyiy_zal_oktyabrskiy.html")
 
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(body))
 	if err != nil {

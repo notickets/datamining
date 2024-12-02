@@ -48,7 +48,7 @@ func NewParser() (*Parser, error) {
 	}, nil
 }
 
-func (p *Parser) RequestURL(URL string) (string, error) {
+func (p *Parser) GetRequest(URL string) (string, error) {
 	client := p.Client
 	if p.ProxyURL != "" {
 		proxy, err := url.Parse(p.ProxyURL)
@@ -75,6 +75,40 @@ func (p *Parser) RequestURL(URL string) (string, error) {
 		return "", err
 	}
 	return string(body), nil
+}
+
+func (p *Parser) DoRequest(method, URL string, body io.Reader) (string, error) {
+	client := p.Client
+	if p.ProxyURL != "" {
+		proxy, err := url.Parse(p.ProxyURL)
+		if err != nil {
+			return "", err
+		}
+		client.Transport = &http.Transport{
+			Proxy: http.ProxyURL(proxy),
+		}
+	}
+
+	req, err := http.NewRequest(method, URL, body)
+	if err != nil {
+		return "", err
+	}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return "", errors.New("failed to fetch data from " + URL + ", status: " + resp.Status)
+	}
+
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+	return string(respBody), nil
 }
 
 func (p *Parser) SendToKafka(event Event) error {
