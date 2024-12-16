@@ -7,4 +7,5 @@ type Event struct {
 	Venue    string  `json:"Venue"`
 	Scene    *string `json:"Scene,omitempty"`
 	ImageURL *string `json:"ImageURL,omitempty"`
+	City     *string `json:"City,omitempty"`
 }
