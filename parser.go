@@ -22,10 +22,7 @@ type Parser struct {
 }
 
 func NewParser() (*Parser, error) {
-	err := godotenv.Load()
-	if err != nil {
-		return nil, errors.New("error loading .env file")
-	}
+	_ = godotenv.Load()
 
 	kafkaBroker := os.Getenv("KAFKA_BROKER")
 	kafkaTopic := os.Getenv("KAFKA_TOPIC")
